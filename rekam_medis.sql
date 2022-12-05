@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 17, 2022 at 06:02 PM
+-- Generation Time: Dec 05, 2022 at 02:24 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -154,6 +154,31 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `perawats`
+--
+
+CREATE TABLE `perawats` (
+  `id` int(50) NOT NULL,
+  `nama_perawat` varchar(100) NOT NULL,
+  `spesialis` varchar(100) NOT NULL,
+  `alamat` text NOT NULL,
+  `no_telp` varchar(15) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `perawats`
+--
+
+INSERT INTO `perawats` (`id`, `nama_perawat`, `spesialis`, `alamat`, `no_telp`, `created_at`, `updated_at`) VALUES
+(2, 'Perawat A', 'Gigi', 'Alamat Perawat A', '08711111', '2022-12-05 11:43:50', '2022-12-05 11:44:05'),
+(3, 'Perawat B', 'Umum', 'Alamat Perawat B', '0872222', '2022-12-05 11:47:44', '2022-12-05 11:47:44'),
+(4, 'Perawat C', 'Ibu dan Anak', 'Alamat Perawat C', '0873333', '2022-12-05 11:48:06', '2022-12-05 11:48:06');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `personal_access_tokens`
 --
 
@@ -205,7 +230,8 @@ CREATE TABLE `rekammedis` (
   `id_poli` int(50) NOT NULL,
   `id_pasien` int(50) NOT NULL,
   `keluhan` text NOT NULL,
-  `id_dokter` int(50) NOT NULL,
+  `id_dokter` int(50) DEFAULT NULL,
+  `id_perawat` int(50) DEFAULT NULL,
   `diagnosa` text NOT NULL,
   `id_obat` int(50) NOT NULL,
   `created_at` datetime NOT NULL,
@@ -216,13 +242,16 @@ CREATE TABLE `rekammedis` (
 -- Dumping data for table `rekammedis`
 --
 
-INSERT INTO `rekammedis` (`id`, `tgl_periksa`, `id_poli`, `id_pasien`, `keluhan`, `id_dokter`, `diagnosa`, `id_obat`, `created_at`, `updated_at`) VALUES
-(11, '2022-11-10', 1, 3, 'Badan Panas', 23, 'Demam', 8, '2022-11-15 06:55:22', '2022-11-15 06:55:22'),
-(12, '2022-11-11', 2, 4, 'Pilek', 25, 'Ada Bakteri di Saluran Hidung', 8, '2022-11-15 06:56:21', '2022-11-15 06:56:21'),
-(13, '2022-11-12', 4, 7, 'Sakit Gigi', 24, 'Gigi Berlubang', 7, '2022-11-15 06:57:04', '2022-11-15 06:57:04'),
-(14, '2022-11-13', 1, 6, 'Kepala Pusing Berat', 23, 'Gejala Vertigo', 6, '2022-11-15 06:58:22', '2022-11-15 06:58:22'),
-(15, '2022-11-15', 4, 5, 'Gusi Sakit', 24, 'Ada pembengkakan pada Gusi', 8, '2022-11-15 07:00:36', '2022-11-15 07:00:36'),
-(16, '2022-11-15', 1, 3, 'Sakit Kepala', 23, 'Gejala Vertigo', 4, '2022-11-15 07:06:57', '2022-11-15 07:07:14');
+INSERT INTO `rekammedis` (`id`, `tgl_periksa`, `id_poli`, `id_pasien`, `keluhan`, `id_dokter`, `id_perawat`, `diagnosa`, `id_obat`, `created_at`, `updated_at`) VALUES
+(11, '2022-11-10', 1, 3, 'Badan Panas', 23, 2, 'Demam', 8, '2022-11-15 06:55:22', '2022-11-15 06:55:22'),
+(12, '2022-11-11', 2, 4, 'Pilek', 25, 3, 'Ada Bakteri di Saluran Hidung', 8, '2022-11-15 06:56:21', '2022-11-15 06:56:21'),
+(13, '2022-11-12', 4, 7, 'Sakit Gigi', 24, 4, 'Gigi Berlubang', 7, '2022-11-15 06:57:04', '2022-11-15 06:57:04'),
+(14, '2022-11-13', 1, 6, 'Kepala Pusing Berat', 23, 2, 'Gejala Vertigo', 6, '2022-11-15 06:58:22', '2022-11-15 06:58:22'),
+(15, '2022-11-15', 4, 5, 'Gusi Sakit', 24, 3, 'Ada pembengkakan pada Gusi', 8, '2022-11-15 07:00:36', '2022-11-15 07:00:36'),
+(16, '2022-11-15', 1, 3, 'Sakit Kepala', 23, 4, 'Gejala Vertigo', 4, '2022-11-15 07:06:57', '2022-11-15 07:07:14'),
+(17, '2022-12-01', 1, 4, 'asdasd', NULL, 3, 'qweqwe', 6, '2022-12-05 12:09:00', '2022-12-05 12:09:00'),
+(18, '2022-12-05', 2, 7, 'Cek Kandungan', 25, NULL, 'Hanya Gerakan Biasa', 10, '2022-12-05 12:30:23', '2022-12-05 12:30:23'),
+(19, '2022-12-06', 4, 5, 'Sakit Gigi dan Gusi', 24, 2, 'Ada Pembengkakan pada Gusi dan Gigi Berlubang', 5, '2022-12-05 12:31:55', '2022-12-05 12:31:55');
 
 -- --------------------------------------------------------
 
@@ -307,6 +336,12 @@ ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
+-- Indexes for table `perawats`
+--
+ALTER TABLE `perawats`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
@@ -377,6 +412,12 @@ ALTER TABLE `pasiens`
   MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT for table `perawats`
+--
+ALTER TABLE `perawats`
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
@@ -392,7 +433,7 @@ ALTER TABLE `polikliniks`
 -- AUTO_INCREMENT for table `rekammedis`
 --
 ALTER TABLE `rekammedis`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `rm_obats`
